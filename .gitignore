@@ -1,0 +1,10 @@
+build/
+dijkstra/dijkstra
+kosaraju/kosaraju
+kruskal/kruskal
+floyd/floyd
+prim/prim
+
+*.mtx
+*.dat
+*.out

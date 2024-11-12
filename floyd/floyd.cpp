@@ -21,7 +21,7 @@ void floyd(matrix<double> &adj_matrix, matrix<double> &dist_matrix) {
 }
 
 int __main(struct program_params params, std::ifstream &fin, Tee &fout) {
-  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, true);
+  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, true, false);
   matrix<double> dist_matrix(adj_matrix);
 
   floyd(adj_matrix, dist_matrix);

@@ -4,8 +4,6 @@
 
 const char *__ALGNAME = "KOSARAJU";
 
-int n_vertex;
-
 void dfs(const matrix<> &adj_matrix, std::vector<bool> &visited,
          std::stack<int> &stack, int curr_vertex) {
   int n_vertex = adj_matrix.size() - 1;
@@ -76,7 +74,7 @@ void kosaraju(const matrix<> &adj_matrix, Tee &fout) {
 }
 
 int __main(struct program_params params, std::ifstream &fin, Tee &fout) {
-  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, false);
+  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, false, true);
 
   kosaraju(adj_matrix, fout);
 

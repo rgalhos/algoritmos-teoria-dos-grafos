@@ -38,6 +38,6 @@ public:
   void close();
 };
 
-std::tuple<int, int, matrix<double>> read_file(std::ifstream &, bool);
+std::tuple<int, int, matrix<>> read_file(std::ifstream &, bool, bool);
 
 #endif

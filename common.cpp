@@ -15,17 +15,16 @@ void Tee::close() {
     this->of.close();
 }
 
-std::tuple<int, int, matrix<double>> read_file(std::ifstream &fin,
-                                               bool has_weight) {
+std::tuple<int, int, matrix<>> read_file(std::ifstream &fin, bool has_weight,
+                                         bool is_directed) {
   int n_vertex, n_edges, v1, v2;
   double weight = 1;
 
   fin >> n_vertex >> n_edges;
   n_vertex++;
 
-  matrix<double> adj_matrix = std::vector(
-      n_vertex + 1,
-      std::vector<double>(n_vertex + 1, has_weight ? INFINITY_DOUBLE : 0));
+  matrix<> adj_matrix =
+      std::vector(n_vertex + 1, std::vector<double>(n_vertex + 1, 0));
 
   for (int i = 0; i < n_edges; i++) {
     if (has_weight)
@@ -34,6 +33,8 @@ std::tuple<int, int, matrix<double>> read_file(std::ifstream &fin,
       fin >> v1 >> v2;
 
     adj_matrix[v1][v2] = weight;
+    if (!is_directed)
+      adj_matrix[v2][v1] = weight;
   }
 
   return {n_vertex, n_edges, adj_matrix};

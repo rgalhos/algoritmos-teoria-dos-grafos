@@ -1,6 +1,7 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -10,6 +11,8 @@
 #define INFINITY_INT std::numeric_limits<int>::infinity()
 
 template <typename T = double> using matrix = std::vector<std::vector<T>>;
+
+std::tuple<int, int, matrix<>> read_file(std::ifstream &, bool, bool);
 
 struct program_params {
   const char *input;
@@ -38,6 +41,33 @@ public:
   void close();
 };
 
-std::tuple<int, int, matrix<>> read_file(std::ifstream &, bool, bool);
+template <typename T> class PriorityQueue {
+private:
+  std::vector<T> heap;
+  int n_elements = 0;
+  bool (*compare)(const T &, const T &);
+
+public:
+  PriorityQueue(bool (*compare)(const T &, const T &)) : compare(compare) {
+    std::make_heap(heap.begin(), heap.end(), compare);
+  }
+
+  void push(T el) {
+    heap.push_back(el);
+    std::push_heap(heap.begin(), heap.end(), compare);
+    ++n_elements;
+  }
+
+  T pop() {
+    T el = heap.front();
+    std::pop_heap(heap.begin(), heap.end(), compare);
+    heap.pop_back();
+    --n_elements;
+
+    return el;
+  }
+
+  bool empty() { return this->n_elements <= 0; }
+};
 
 #endif

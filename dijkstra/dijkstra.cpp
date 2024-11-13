@@ -1,16 +1,18 @@
 #include "../common.hpp"
 #include <cstdlib>
-#include <queue>
 #include <vector>
 
 const char *__ALGNAME = "DIJKSTRA";
 
-typedef struct {
+struct node_t {
   int id;
   float weight;
-} node_t;
+};
 
-std::priority_queue<node_t> pqueue;
+// Queue implementada com heap (common.hpp)
+PriorityQueue<node_t> pqueue([](const node_t &a, const node_t &b) {
+  return a.weight > b.weight;
+});
 
 bool operator<(const node_t &a, const node_t &b) { return a.weight > b.weight; }
 
@@ -37,8 +39,7 @@ auto dijkstra(const int n_vertex, const matrix<> &adj_matrix,
   total_cost[initial_node] = 0;
 
   while (!pqueue.empty()) {
-    node_t curr_vertex = pqueue.top();
-    pqueue.pop();
+    node_t curr_vertex = pqueue.pop();
 
     visited[curr_vertex.id] = true;
     auto neighbors = get_neighbors(adj_matrix, curr_vertex.id);

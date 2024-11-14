@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
       params.initial = atoi(optarg);
       break;
     case 's':
-      params.solution = false;
+      params.solution = true;
       break;
     case '?':
       std::cerr << "Parâmetro inválido: " << optopt << std::endl;

@@ -2,10 +2,7 @@ CXX = g++
 
 CFLAGS := -std=c++20
 CFLAGS += -pedantic -Wall -Wextra
-CFLAGS += -g
-
-INCLUDES := -I .
-INCLUDES += -lm
+# CFLAGS += -g
 
 LIBS := -lstdc++
 
@@ -31,7 +28,7 @@ $(OBJ_DIR):
 	mkdir -p $(OUT_DIR) $(OBJ_DIR)
 
 $(TARGETS): % : $(OBJ_DIR)/%.o
-	$(CXX) $(CFLAGS) $(INCLUDES) -o $(OUT_DIR)/$@ $(COMMON) $(OBJ_DIR)/$@.o $(ENTRYPOINT) $(LIBS)
+	$(CXX) $(CFLAGS) -o $(OUT_DIR)/$@ $(COMMON) $(OBJ_DIR)/$@.o $(ENTRYPOINT) $(LIBS)
 	cp $(OUT_DIR)/$@ ./$@/
 
 clean:

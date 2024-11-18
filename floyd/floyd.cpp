@@ -4,9 +4,21 @@
 
 const char *__ALGNAME = "FLOYD";
 
-void floyd(matrix<double> &adj_matrix, matrix<double> &dist_matrix) {
+matrix<> floyd_warshall(const matrix<> &adj_matrix) {
   int n_vertex = adj_matrix.size() - 1;
+  matrix<> dist_matrix(adj_matrix);
 
+  // Corrige a entrada para deixar vértices inalcançáveis com peso
+  // infinito, mas mantendo 0 para i=j
+  for (int i = 1; i < n_vertex; i++) {
+    for (int j = 1; j < n_vertex; j++) {
+      if (dist_matrix[i][j] == 0 && i != j) {
+        dist_matrix[i][j] = INFINITY_DOUBLE;
+      }
+    }
+  }
+
+  // Floyd-Warshall:
   for (int k = 1; k < n_vertex; k++) {
     for (int i = 1; i < n_vertex; i++) {
       for (int j = 1; j < n_vertex; j++) {
@@ -18,20 +30,18 @@ void floyd(matrix<double> &adj_matrix, matrix<double> &dist_matrix) {
       }
     }
   }
+
+  return dist_matrix;
 }
 
 int __main(struct program_params params, std::ifstream &fin, Tee &fout) {
-  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, true, false);
-  matrix<double> dist_matrix(adj_matrix);
+  auto [n_vertex, n_edges, adj_matrix] = read_file(fin, true, true);
 
-  floyd(adj_matrix, dist_matrix);
+  auto dist_matrix = floyd_warshall(adj_matrix);
 
-  // Print
   for (int i = 1; i < n_vertex; i++) {
     for (int j = 1; j < n_vertex; j++) {
-      char str[8];
-      snprintf(str, 8, "%5.1lf ", dist_matrix[i][j]);
-      fout << str;
+      fout << dist_matrix[i][j] << " ";
     }
 
     fout << std::endl;

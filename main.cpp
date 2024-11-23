@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 
 // Parâmetros passados pelo usuário
 struct program_params params {
-  .input = NULL, .output = NULL, .initial = -1, .solution = false,
+  .input = NULL, .output = NULL, .initial = 1, .solution = false,
 };
 
 static const struct option options[] = {
